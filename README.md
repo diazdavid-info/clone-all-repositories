@@ -26,3 +26,28 @@ docker run --rm -it \
     diazdavid/clone-all-repositories bitbucket
 ```
 
+## Clone all repositories from Gitlab
+```
+docker run --rm -it diazdavid/clone-all-repositories gitlab
+```
+
+### Credentials
+Gitlab api need 2 parameters:
+1. GITLAB_DOMAIN -> domain when gitlab is hosting, example `gitlab.com`
+2. GITLAB_TOKEN -> token which you can to create in https://<gitlab_domain>/-/profile/personal_access_tokens
+
+### ssh key
+You need mount dir ssh for clone repository `-v $HOME/.ssh:/root/.ssh`
+
+### Persistent storage
+Data is stored in `/opt/workspace`, which can be used with `-v /docker/host/dir:/opt/workspace`
+
+### Example
+```
+docker run --rm -it \
+    -e GITLAB_DOMAIN:<domain> \
+    -e GITLAB_TOKEN:<token> \
+    -v $HOME/.ssh:/root/.ssh \
+    -v /docker/host/dir:/opt/workspace \ 
+    diazdavid/clone-all-repositories gitlab
+```
